@@ -18,16 +18,15 @@ class Command(BaseCommand):
         facebook_users = root.xpath('//*[@class="contents"]//*[@class="thread"]')
         ids = []
         for element in tqdm(facebook_users):
-            all_speakers = str(element.text)
-            speakers = all_speakers.partition(',')
+            speakers = str(element.text).split(',')
+            for s in speakers:
+                s.replace('@facebook.com', '')
+                ids.append(s)
+            user = FbUser.objects.get_or_create(threads=element.text, facebook_id=s)
 
-                for s in speakers:
-
-            user = FbUser.objects.get_or_create(users=element.text)
-            for p in element.xpath('./p'):
-                fbuser = FbUser(
-                    facebook_id=user,
-                    threads=
-                )
-                ids.append(fbuser)
-
+        for p in element.xpath('./p'):
+            fbuser = FbUser(
+                facebook_id=user,
+                threads=
+            )
+            ids.append(fbuser)
