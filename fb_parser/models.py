@@ -8,3 +8,7 @@ class FbMessage(models.Model):
     text = models.TextField(blank=True)
     user = models.CharField(max_length=200)
     meta = models.CharField(max_length=200)
+
+class User(models.Model):
+    user_thread = models.ManyToManyField(FbThread, related_name='threads of user')
+    user_id = models.
